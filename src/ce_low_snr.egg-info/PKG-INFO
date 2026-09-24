@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: ce-low-snr
+Version: 0.1.0
+Summary: Investigation of Cross-Entropy's implicit max-margin bias under low-SNR and invariant covariate shift
+Author: Nick Hunt
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: torch>=2.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: matplotlib>=3.7.0
+Requires-Dist: scipy>=1.10.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+
+# ce-low-snr
