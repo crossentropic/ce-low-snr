@@ -1,0 +1,10 @@
+# Environments & caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# Notes
+initplan.md
+generatedplan.md
