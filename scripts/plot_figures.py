@@ -268,8 +268,8 @@ def plot_fig3_loss_tournament():
     print(f"[✓] Saved {output_png}")
 
 
-def plot_fig4_isotropic_fallacy():
-    """Figure 4: The Isotropic Fallacy (Weight Decay ablation)."""
+def plot_fig4_weight_decay_ablation():
+    """Figure 4: Weight Decay ablation (1x2 side-by-side: Norm Shrinkage vs. Angular Invariance)."""
     with open(RESULTS_DIR / "03_loss_comparison.json") as f:
         data = json.load(f)
 
@@ -278,35 +278,32 @@ def plot_fig4_isotropic_fallacy():
     norms = [row["weight_norm"] for row in ablation]
     cos_sims = [row["cos_sim"] for row in ablation]
 
-    fig, ax1 = plt.subplots(figsize=(8, 4.8))
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5.0))
 
-    # Weight norm on primary y-axis
-    color_norm = "#1f77b4"
-    ax1.set_xlabel(r"Weight Decay Regularization $\lambda$ (log scale)")
-    ax1.set_ylabel(r"Weight Norm $\|w\|_2$", color=color_norm)
-    # Replace lambda=0 with 1e-6 for log plotting
     lambdas_plot = [max(l, 1e-6) for l in lambdas]
-    line1 = ax1.plot(lambdas_plot, norms, "o-", color=color_norm, linewidth=2.5, label=r"Weight Norm $\|w\|_2$")
-    ax1.tick_params(axis="y", labelcolor=color_norm)
-    ax1.set_xscale("log")
-    ax1.grid(True)
 
-    # Cosine similarity on secondary y-axis
-    ax2 = ax1.twinx()
-    color_cos = "#d62728"
-    ax2.set_ylabel(r"Directional Alignment $\cos(w, w^*)$", color=color_cos)
-    line2 = ax2.plot(lambdas_plot, cos_sims, "s--", color=color_cos, linewidth=2.5, label=r"Alignment $\cos(w, w^*)$")
-    ax2.tick_params(axis="y", labelcolor=color_cos)
-    ax2.set_ylim(0.0, 0.5)
+    # Panel A: Weight norm shrinkage
+    ax_a = axes[0]
+    ax_a.plot(lambdas_plot, norms, "o-", color="#1f77b4", linewidth=2.5, markersize=7)
+    ax_a.set_xscale("log")
+    ax_a.set_ylim(0.0, 2.75)
+    ax_a.set_xlabel(r"Weight Decay Regularization $\lambda$ (log scale)")
+    ax_a.set_ylabel(r"Weight Norm $\|w\|_2$")
+    ax_a.set_title(r"(a) Parameter Norm Shrinkage ($\|w\|_2$)")
+    ax_a.grid(True)
 
-    # Combined legend placed in the open top-right area
-    lines = line1 + line2
-    labels = [l.get_label() for l in lines]
-    ax1.legend(lines, labels, loc="upper right", framealpha=0.95)
+    # Panel B: Directional alignment invariance
+    ax_b = axes[1]
+    ax_b.plot(lambdas_plot, cos_sims, "s--", color="#d62728", linewidth=2.5, markersize=7)
+    ax_b.set_xscale("log")
+    ax_b.set_ylim(0.0, 0.50)
+    ax_b.set_xlabel(r"Weight Decay Regularization $\lambda$ (log scale)")
+    ax_b.set_ylabel(r"Directional Alignment: $\cos(w, w^*)$")
+    ax_b.set_title(r"(b) Directional Invariance: $\cos(w, w^*)$")
+    ax_b.grid(True)
 
-    plt.title("The Isotropic Fallacy: Norm Shrinkage Without Angular Recovery (SNR = 0.1)")
     plt.tight_layout()
-    output_png = FIGURES_DIR / "fig4_isotropic_fallacy.png"
+    output_png = FIGURES_DIR / "fig4_weight_decay_ablation.png"
     plt.savefig(output_png, bbox_inches="tight")
     plt.close()
     print(f"[✓] Saved {output_png}")
@@ -318,7 +315,7 @@ def main():
     plot_fig1_stationary_tilt()
     plot_fig2_invariant_shift_collapse()
     plot_fig3_loss_tournament()
-    plot_fig4_isotropic_fallacy()
+    plot_fig4_weight_decay_ablation()
     print("\n[✓] All figures generated successfully in figures/")
 
 

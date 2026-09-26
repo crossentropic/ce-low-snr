@@ -1,10 +1,10 @@
 """
-Experiment 03: Loss Geometry Tournament & The Isotropic Fallacy.
+Experiment 03: Loss Geometry Tournament & Weight Decay Ablation.
 
 Proves:
 1. Under low SNR, Cross-Entropy suffers higher directional tilt and worse calibration
    under covariate shift compared to bounded loss geometries (Square Loss / Label Smoothing).
-2. The Isotropic Fallacy: L2 Weight Decay reduces weight norm, but isotropic penalty
+2. Radial Shrinkage without Angular Correction: L2 Weight Decay reduces weight norm, but isotropic penalty
    penalizes signal and noise coordinates equally, failing to restore directional alignment
    cos(w, w*).
 3. Square Loss (converging to min-norm interpolator without asymptotic margin drive) preserves
@@ -103,8 +103,8 @@ def run_loss_comparison_experiment(
             f"elapsed: {time.time() - t_start:.1f}s)"
         )
 
-    # 2. Isotropic Fallacy Ablation: Sweep weight decay lambda at fixed low SNR = 0.1
-    print("\n=== Running Isotropic Fallacy Ablation (Weight Decay Sweep at SNR = 0.1) ===")
+    # 2. Weight Decay Ablation: Sweep weight decay lambda at fixed low SNR = 0.1
+    print("\n=== Running Weight Decay Ablation (Sweep lambda at SNR = 0.1) ===")
     lambdas = [0.0, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1.0]
     wd_ablation_results = []
 

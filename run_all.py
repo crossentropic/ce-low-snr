@@ -37,7 +37,7 @@ def main() -> None:
     run_command("Step 3/5: Phase 2 - Invariant Shift Stress-Test", [python_bin, "experiments/02_regime_shift_stress.py"])
 
     # 4. Phase 3: Loss comparison tournament
-    run_command("Step 4/5: Phase 3 - Loss Geometry Tournament & Isotropic Ablation", [python_bin, "experiments/03_loss_comparison.py"])
+    run_command("Step 4/5: Phase 3 - Loss Geometry Tournament & Weight Decay Ablation", [python_bin, "experiments/03_loss_comparison.py"])
 
     # 5. Plot figures
     run_command("Step 5/5: Generating Publication-Grade Figures", [python_bin, "scripts/plot_figures.py"])
